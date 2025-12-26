@@ -1,7 +1,7 @@
 import React from 'react'
 import { useClerk, useUser} from '@clerk/clerk-react'
 
-const Sidebar = ({ Sidebar, setSidebar}) => {
+const Sidebar = ({ sidebar, setSidebar}) => {
 
    const {user} = useUser();
    const {signout, openUserProfile} = useClerk() 
