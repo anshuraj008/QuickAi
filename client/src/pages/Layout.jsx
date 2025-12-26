@@ -6,7 +6,6 @@ import Sidebar from '../components/Sidebar'
 import {SignIn, useUser} from '@clerk/clerk-react'
 
 const Layout = () => {
-
   const navigate = useNavigate()
   const [sidebar, setSidebar] = useState(false)
   const { user } = useUser()
