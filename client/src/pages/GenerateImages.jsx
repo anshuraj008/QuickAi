@@ -42,8 +42,8 @@ const GenerateImages = () => {
 
         <p className='mt-6 text-sm font-medium'>Describe Your Image</p>
         <textarea
-          value={input}
           onChange={(e) => setInput(e.target.value)}
+          value={input}
           rows={4}
           className='w-full p-2 px-3 mt-2 outline-none text-sm rounded-md border border-gray-300'
           placeholder='Describe what you want to see in the image...'
@@ -107,9 +107,8 @@ const GenerateImages = () => {
           </div>
         </div>
       </div>
-
     </div>
   )
 }
 
-export default GenerateImages
+export default GenerateImages;
