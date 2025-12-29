@@ -85,7 +85,7 @@ const GenerateImages = () => {
         <button
           type='submit'
           className='w-full flex justify-center items-center gap-2
-            bg-gradient-to-br from-[#00AD25] to-[#04FF50]
+            bg-gradient-to-b from-[#00AD25] to-[#04FF50]
             text-white px-4 py-2 mt-6 text-sm rounded-lg'
         >
           <Image className='w-5 h-5' />
