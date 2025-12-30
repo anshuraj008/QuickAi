@@ -91,9 +91,8 @@ export const generateImage = async (req, res) => {
         const { userId } = req.auth();
         const { prompt, publish } = req.body;
         const plan = req.plan;
-        const free_usage = req.free_usage;
 
-        if(plan !== 'premium' && free_usage >= 10){
+        if(plan !== 'premium'){
             return res.json({ success: false, message: 'Free usage limit exceeded. Please upgrade to premium plan.'});
         }
 
@@ -111,12 +110,6 @@ export const generateImage = async (req, res) => {
         const {secure_url} = await cloudinary.uploader.upload(base64Image)
 
         await sql`INSERT INTO creations (user_id, type, prompt, content, publish) VALUES (${userId}, 'image', ${prompt}, ${secure_url}, ${publish ?? false})`;
-        
-        if(plan !== 'premium'){
-            await clerkClient.users.updateUserMetadata(userId, {
-                privateMetadata: { free_usage: free_usage + 1 }
-            });
-        }
         
         res.json({ success: true, content: secure_url });
 
