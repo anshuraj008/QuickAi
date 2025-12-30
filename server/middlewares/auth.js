@@ -4,14 +4,16 @@ import { clerkClient } from "@clerk/express";
 
 export const auth = async (req, res, next) => {
     try {
-        const { userId, has} = await req.auth;
-        const hasPremiumPlan = await has({plan: 'premium'});
+        const { userId } = await req.auth();
 
         const user = await clerkClient.users.getUser(userId);
 
-        if (!hasPremiumPlan && user.privateMetadata.free_usage) {
+        // Check premium plan from user metadata instead of Clerk billing
+        const hasPremiumPlan = user.privateMetadata?.plan === 'premium';
+
+        if (!hasPremiumPlan && user.privateMetadata?.free_usage) {
             req.free_usage = user.privateMetadata.free_usage;
-        } else{
+        } else if (!hasPremiumPlan) {
             await clerkClient.users.updateUserMetadata(userId, {
                 privateMetadata: { free_usage: 0 }
             });
