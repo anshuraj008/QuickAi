@@ -30,7 +30,7 @@ export const generateArticle = async (req, res) => {
         const enhancedPrompt = `${prompt}\n\nPlease write a comprehensive, detailed article of approximately ${wordCount} words. Make sure to cover the topic thoroughly with well-developed paragraphs, examples, and insights.`;
 
         const response = await AI.chat.completions.create({
-        model: "gemini-2.5-flash",
+        model: "gemini-2.5-flash-lite",
           messages: [
            {
              role: "user",
@@ -54,8 +54,11 @@ export const generateArticle = async (req, res) => {
         res.json({ success: true, content });
         
     } catch (error) {
-        console.log(error.message);
-        res.json({ success: false, message: error.message});
+        console.log(error);
+        if (error.status === 429) {
+            return res.json({ success: false, message: 'API rate limit reached. Please wait a moment and try again.'});
+        }
+        res.json({ success: false, message: error.message || 'Failed to generate article'});
     }
 }
 
@@ -72,11 +75,15 @@ export const generateBlogTitle = async (req, res) => {
             return res.json({ success: false, message: 'Free usage limit exceeded. Please upgrade to premium plan.'});
         }
 
+        const enhancedPrompt = `${prompt}
+
+        Generate 5 creative and engaging blog titles. Include different styles: questions, how-to guides, listicles, and attention-grabbing headlines. Number them 1-5.`;
+
         const response = await AI.chat.completions.create({
-        model: "gemini-2.5-flash",
-          messages: [{ role: "user", content: prompt,}],
-            temperature: 0.7,
-            max_tokens: 100,
+        model: "gemini-2.5-flash-lite",
+          messages: [{ role: "user", content: enhancedPrompt,}],
+            temperature: 0.8,
+            max_tokens: 300,
         });
 
         const content = response.choices[0].message.content;
@@ -92,8 +99,11 @@ export const generateBlogTitle = async (req, res) => {
         res.json({ success: true, content });
         
     } catch (error) {
-        console.log(error.message);
-        res.json({ success: false, message: error.message});
+        console.log(error);
+        if (error.status === 429) {
+            return res.json({ success: false, message: 'API rate limit reached. Please wait a moment and try again.'});
+        }
+        res.json({ success: false, message: error.message || 'Failed to generate titles'});
     }
 }
 
