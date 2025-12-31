@@ -199,7 +199,7 @@ export const resumeReview = async (req, res) => {
         const dataBuffer = fs.readFileSync(resume.path)
         const pdfData = await pdf(dataBuffer)
 
-        const prompt = `Review my resume and suggest improvements. Here is the content of my resume: ${pdfData.text}`;
+        const prompt = `Review my resume and suggest improvements. Here is the content of my resume:\n\n${pdfData.text}`
 
         const response = await AI.chat.completions.create({
          model: "gemini-2.5-flash",
