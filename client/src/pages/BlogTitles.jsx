@@ -71,7 +71,6 @@ const BlogTitles = () => {
             <br/>
             <button disabled={loading} className='w-full flex justify-center items-center gap-2 bg-gradient-to-r from-[#C341F6] to-[#8E37EB] text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer'>
             {loading ? <span className='w-4 h-4 my-1 rounded-full border-2 border-t-transparent animate-spin'></span> : <Hash className='w-5'/>}
-              
               Generate title
             </button>
       </form>
@@ -82,7 +81,7 @@ const BlogTitles = () => {
              <Hash className='w-5 h-5 text-[#8E37EB]'/>
              <h1 className='text-xl font-semibold'>Generated titles</h1>
       </div>
-      {content ? (
+      {!content ? (
       <div className='flex-1 flex justify-center items-center'>
           <div className='text-sm flex flex-col items-center gap-5 text-gray-400'>
                <Hash className='w-9 h-9'/>
@@ -96,7 +95,7 @@ const BlogTitles = () => {
           </div>
           </div>
       ) }
-      
+
     </div>
     </div>
   )
