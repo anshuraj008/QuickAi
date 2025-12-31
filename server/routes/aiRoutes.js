@@ -1,7 +1,7 @@
 import express from 'express';
 import { generateArticle, generateBlogTitle, generateImage, removeImageBackground, removeImageObject, resumeReview } from '../controllers/aiController.js';
 import { auth } from '../middlewares/auth.js';
-import { upload } from '../configs/multer.js';
+import upload from '../configs/multer.js';
 
 const airouter = express.Router();
 
