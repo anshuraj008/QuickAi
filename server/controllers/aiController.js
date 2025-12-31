@@ -23,16 +23,22 @@ export const generateArticle = async (req, res) => {
             return res.json({ success: false, message: 'Free usage limit exceeded. Please upgrade to premium plan.'});
         }
 
+        // Convert length to approximate word count and tokens
+        const wordCount = length === 'short' ? '300-500' : length === 'medium' ? '800-1200' : '1500-2000';
+        const maxTokens = length === 'short' ? 700 : length === 'medium' ? 1600 : 2500;
+        
+        const enhancedPrompt = `${prompt}\n\nPlease write a comprehensive, detailed article of approximately ${wordCount} words. Make sure to cover the topic thoroughly with well-developed paragraphs, examples, and insights.`;
+
         const response = await AI.chat.completions.create({
         model: "gemini-2.5-flash",
           messages: [
            {
              role: "user",
-             content: prompt,
+             content: enhancedPrompt,
             },
             ],
             temperature: 0.7,
-            max_tokens: length,
+            max_tokens: maxTokens,
         });
 
         const content = response.choices[0].message.content;

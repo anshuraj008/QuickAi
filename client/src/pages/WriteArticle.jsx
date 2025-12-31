@@ -2,6 +2,7 @@ import { Edit, Sparkle } from 'lucide-react'
 import React, { useState}from 'react'
 import axios from 'axios'
 import { useAuth } from '@clerk/clerk-react';
+import Markdown from 'react-markdown';
 
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 
@@ -43,6 +44,7 @@ const WriteArticle = () => {
 
   return (
     <div className='h-full overflow-y-scroll p-6 flex items-start flex-wrap gap-4 text-slate-700'>
+
       {/* left col */}
       <form onSubmit={onSubmitHandler} className= 'w-full max-w-lg p-4 bg-white rounded-lg border border-gray-200 '>
            <div className='flex items-center gap-3'>
@@ -67,6 +69,7 @@ const WriteArticle = () => {
               Generate article
             </button>
       </form>
+
       {/* right col */}
       <div className='w-full max-w-lg p-4 bg-white rounded-lg flex flex-col border border-grey-200 min-h-96 max-h-[600px]'>
          <div className='flex items-center gap-3'>
@@ -83,7 +86,9 @@ const WriteArticle = () => {
       </div>
       ) : (
         <div className='mt-3 h-full overflow-y-scroll text-sm text-slate-600' >
-          <div>{content}</div>
+          <div className='reset-tw'>
+          <Markdown>{content}</Markdown>
+          </div>
         </div>
       )}
 
