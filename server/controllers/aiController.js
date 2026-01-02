@@ -4,7 +4,6 @@ import { clerkClient } from "@clerk/express";
 import axios from "axios";
 import { v2 as cloudinary } from 'cloudinary';
 import fs from 'fs';
-import pdf from 'pdf-parse';
 
 const AI = new OpenAI({
     apiKey: process.env.GEMINI_API_KEY,
@@ -222,21 +221,43 @@ export const resumeReview = async (req, res) => {
             return res.json({ success: false, message: "File size exceeds the 5MB limit."});
         }
 
-        const dataBuffer = fs.readFileSync(resume.path)
-        const pdfData = await pdf(dataBuffer)
+        // Use pdf-parse-fork which has better ES module support
+        const pdfParse = (await import('pdf-parse-fork')).default;
+        
+        const dataBuffer = fs.readFileSync(resume.path);
+        const pdfData = await pdfParse(dataBuffer);
         
         // Clean up uploaded file
         if (fs.existsSync(resume.path)) {
             fs.unlinkSync(resume.path);
         }
 
-        const prompt = `Review the following resume and provide constructive feedback on its strength, weaknesses, and areas for improvement. Resume Content:\n\n${pdfData.text}`
+        const prompt = `You are an expert resume reviewer and career advisor. Analyze the following resume and provide comprehensive, actionable feedback.
+
+Your review should include:
+
+1. **Overall Impression**: Brief summary of the resume's current state
+2. **Strengths**: What the candidate does well (formatting, experience, skills)
+3. **Areas for Improvement**: Specific weaknesses and what needs work
+4. **Content Analysis**:
+   - Is the professional summary/objective compelling?
+   - Are achievements quantified with metrics?
+   - Is the experience described with action verbs and impact?
+   - Are skills relevant and properly showcased?
+5. **Formatting & Structure**: Layout, readability, and organization
+6. **ATS Compatibility**: Keywords and formatting for applicant tracking systems
+7. **Actionable Recommendations**: Specific steps to improve the resume
+
+Resume Content:
+${pdfData.text}
+
+Provide your analysis in a well-structured, professional format using markdown.`
 
         const response = await AI.chat.completions.create({
          model: "gemini-2.5-flash-lite",
           messages: [{ role: "user", content: prompt,}],
             temperature: 0.7,
-            max_tokens: 1000,
+            max_tokens: 2000,
         });
 
         const content = response.choices[0].message.content;
