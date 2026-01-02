@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @import "tailwindcss";
 
-@variant dark (.dark *);
-
 *{
   font-family: "Outfit", sans-serif;
 }
@@ -19,6 +17,8 @@ html.dark, html.dark body, html.dark #root {
 @theme{
      --color-primary: #5044E5;
 }
+
+@variant dark (&:where(.dark, .dark *));
 
 .reset-tw, .reset-tw *{
   all: revert !important;
