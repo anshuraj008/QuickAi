@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 
 const ReviewResume = () => {
   const [input, setInput] = useState('')
+  const [loading, setLoading] = useState(false)
     const onSubmitHandler = async (e) => {
       e.preventDefault();
     }
@@ -22,9 +23,9 @@ const ReviewResume = () => {
           
             <p className='text-xs text-gray-500 font-light mt-1'>Supported formats: PDF Resume only.</p>
 
-            <button className='w-full flex justify-center items-center gap-2 bg-gradient-to-r from-[#00DA83] to-[#009BB3] text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer'>
-              <FileText className='w-5'/>
-              Review Resume
+            <button disabled={loading} className={`w-full flex justify-center items-center gap-2 bg-gradient-to-r from-[#00DA83] to-[#009BB3] text-white px-4 py-2 mt-6 text-sm rounded-lg ${loading ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer hover:opacity-90'} transition-opacity`}>
+              {loading ? <span className='w-4 h-4 my-1 rounded-full border-2 border-white border-t-transparent animate-spin'></span> : <FileText className='w-5'/>}
+              {loading ? 'Analyzing Resume...' : 'Review Resume'}
             </button>
       </form>
       {/* right col */}

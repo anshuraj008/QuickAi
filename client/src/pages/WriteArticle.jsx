@@ -61,12 +61,12 @@ const WriteArticle = () => {
               ) )}
             </div>
             <br/>
-            <button disabled={loading} className='w-full flex justify-center items-center gap-2 bg-gradient-to-r from-[#226BFF] to-[#65ADFF] text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer'>
+            <button disabled={loading} className={`w-full flex justify-center items-center gap-2 bg-gradient-to-r from-[#226BFF] to-[#65ADFF] text-white px-4 py-2 mt-6 text-sm rounded-lg ${loading ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer hover:opacity-90'} transition-opacity`}>
               {
-                loading ? <span className='w-4 h-4 my-1 rounded-full border-2 border-t-transparent animate-spin'></span>
+                loading ? <span className='w-4 h-4 my-1 rounded-full border-2 border-white border-t-transparent animate-spin'></span>
               : <Edit className='w-5'/>
               }
-              Generate article
+              {loading ? 'Generating Article...' : 'Generate article'}
             </button>
       </form>
 

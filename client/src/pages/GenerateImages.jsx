@@ -107,13 +107,13 @@ const GenerateImages = () => {
 
         <button
           disabled={loading}
-          className='w-full flex justify-center items-center gap-2
+          className={`w-full flex justify-center items-center gap-2
             bg-gradient-to-b from-[#00AD25] to-[#04FF50]
-            text-white px-4 py-2 mt-6 text-sm rounded-lg'
+            text-white px-4 py-2 mt-6 text-sm rounded-lg ${loading ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer hover:opacity-90'} transition-opacity`}
         >
-          {loading ? <span className='w-4 h-4 my-1 rounded-full border-2 border-t-transparent animate-spin'></span> 
+          {loading ? <span className='w-4 h-4 my-1 rounded-full border-2 border-white border-t-transparent animate-spin'></span> 
           : <Image className='w-5 h-5' />}
-          Generate Image
+          {loading ? 'Generating Image...' : 'Generate Image'}
         </button>
       </form>
 
