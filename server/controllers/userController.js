@@ -9,7 +9,6 @@ export const getUserCreations = async (req, res) => {
         res.json({ success: true, creations });
 
     } catch (error) {
-        console.log(error.message);
         res.json({ success: false, message: error.message});
     }
 }
@@ -57,7 +56,6 @@ export const toggleLikeCreation = async (req, res) => {
         res.json({ success: true, message });
         
     } catch (error) {
-        console.log(error.message);
         res.json({ success: false, message: error.message});
     }
 }

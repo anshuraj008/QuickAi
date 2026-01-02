@@ -4,6 +4,7 @@ import { clerkClient } from "@clerk/express";
 import axios from "axios";
 import { v2 as cloudinary } from 'cloudinary';
 import fs from 'fs';
+import pdf from 'pdf-parse';
 
 const AI = new OpenAI({
     apiKey: process.env.GEMINI_API_KEY,
@@ -191,6 +192,11 @@ export const removeImageObject = async (req, res) => {
             resources_type: 'image'
         })
 
+        // Clean up uploaded file
+        if (fs.existsSync(image.path)) {
+            fs.unlinkSync(image.path);
+        }
+
         await sql`INSERT INTO creations (user_id, type, prompt, content) VALUES (${userId}, 'image', ${`Remove ${object} from image`}, ${imageUrl})`;
         
         res.json({ success: true, content: imageUrl });
@@ -216,8 +222,6 @@ export const resumeReview = async (req, res) => {
             return res.json({ success: false, message: "File size exceeds the 5MB limit."});
         }
 
-        const pdfParse = await import('pdf-parse');
-        const pdf = pdfParse.default || pdfParse;
         const dataBuffer = fs.readFileSync(resume.path)
         const pdfData = await pdf(dataBuffer)
         
@@ -226,10 +230,10 @@ export const resumeReview = async (req, res) => {
             fs.unlinkSync(resume.path);
         }
 
-        const prompt = `Review my resume and suggest improvements. Here is the content of my resume:\n\n${pdfData.text}`
+        const prompt = `Review the following resume and provide constructive feedback on its strength, weaknesses, and areas for improvement. Resume Content:\n\n${pdfData.text}`
 
         const response = await AI.chat.completions.create({
-         model: "gemini-2.5-flash",
+         model: "gemini-2.5-flash-lite",
           messages: [{ role: "user", content: prompt,}],
             temperature: 0.7,
             max_tokens: 1000,
@@ -237,7 +241,7 @@ export const resumeReview = async (req, res) => {
 
         const content = response.choices[0].message.content;
 
-        await sql`INSERT INTO creations (user_id, type, prompt, content) VALUES (${userId}, 'Review the uploaded resume', ${content}, 'resume-review')`;
+        await sql`INSERT INTO creations (user_id, prompt, content, type) VALUES (${userId}, 'Review the uploaded resume', ${content}, 'resume-review')`;
         
         res.json({ success: true, content});
         
