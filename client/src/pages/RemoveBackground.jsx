@@ -49,12 +49,12 @@ const RemoveBackground = () => {
           
             <p className='text-xs text-gray-500 font-light mt-1'>Supported formats: JPG, PNG, WEBP</p>
 
-            <button disabled={loading} className='w-full flex justify-center items-center gap-2 bg-gradient-to-r from-[#F6AB41] to-[#FF4938] text-white px-4 py-2 mt-6 text-sm rounded-lg cursor-pointer'>
+            <button disabled={loading} className={`w-full flex justify-center items-center gap-2 bg-gradient-to-r from-[#F6AB41] to-[#FF4938] text-white px-4 py-2 mt-6 text-sm rounded-lg ${loading ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer hover:opacity-90'} transition-opacity`}>
             {
-              loading ? <span className='w-4 h-4 my-1 rounded-full boarder-2 border-t-transparent animate-spin'></span>
+              loading ? <span className='w-4 h-4 my-1 rounded-full border-2 border-white border-t-transparent animate-spin'></span>
               : <Eraser className='w-5'/>
             }
-              Remove Background
+              {loading ? 'Removing Background...' : 'Remove Background'}
             </button>
       </form>
 
