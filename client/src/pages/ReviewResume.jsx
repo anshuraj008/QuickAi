@@ -76,7 +76,7 @@ const ReviewResume = () => {
       </div>
       ) : (
             <div className='mt-3 h-full overflow-y-scroll text-sm text-slate-600' >
-            <div>
+            <div className='reset-tw'>
             <Markdown>{content}</Markdown>
             </div>
             </div>
