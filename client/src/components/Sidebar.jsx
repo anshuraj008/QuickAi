@@ -21,7 +21,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
 
   return (
     <div className={`w-60 bg-white dark:bg-slate-900 border-r border-gray-200 dark:border-indigo-800 flex flex-col
-      max-sm:absolute top-14 bottom-0
+      max-sm:fixed max-sm:top-14 max-sm:left-0 max-sm:bottom-0 max-sm:z-50 max-sm:shadow-2xl
       ${sidebar ? 'translate-x-0' : 'max-sm:-translate-x-full'}
       transition-all duration-300 ease-in-out overflow-hidden`}>
 
