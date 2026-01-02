@@ -1,6 +1,31 @@
+import { useEffect, useRef, useState } from "react"
 import { assets } from "../assets/assets"
 
 const Testimonial = () => {
+    const [isVisible, setIsVisible] = useState(false)
+    const sectionRef = useRef(null)
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true)
+                }
+            },
+            { threshold: 0.1 }
+        )
+
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current)
+        }
+
+        return () => {
+            if (sectionRef.current) {
+                observer.unobserve(sectionRef.current)
+            }
+        }
+    }, [])
+
     const dummyTestimonialData = [
         {
             image: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=200",
@@ -26,8 +51,8 @@ const Testimonial = () => {
     ]
 
     return (
-        <div className='px-4 sm:px-20 xl:px-32 py-24'>
-            <div className='text-center'>
+        <div ref={sectionRef} className='px-4 sm:px-20 xl:px-32 py-24'>
+            <div className={`text-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 <h2 className='text-slate-700 dark:text-white text-[42px] font-semibold transition-colors'>
                     <span className='bg-gradient-to-r from-pink-600 to-purple-600 text-transparent bg-clip-text'>Loved by Creators</span>
                 </h2>
@@ -35,7 +60,11 @@ const Testimonial = () => {
             </div>
             <div className='flex flex-wrap mt-10 justify-center'>
                 {dummyTestimonialData.map((testimonial, index) => (
-                    <div key={index} className='p-8 m-4 max-w-xs rounded-lg bg-[#FDFDFE] dark:bg-indigo-900/50 dark:border-indigo-700 shadow-lg border border-gray-100 hover:-translate-y-1 dark:hover:shadow-purple-500/30 transition-all duration-300 cursor-pointer'>
+                    <div 
+                        key={index} 
+                        className={`p-8 m-4 max-w-xs rounded-lg bg-[#FDFDFE] dark:bg-indigo-900/50 dark:border-indigo-700 shadow-lg border border-gray-100 hover:-translate-y-2 hover:scale-105 dark:hover:shadow-purple-500/30 transition-all duration-500 cursor-pointer ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+                        style={{ transitionDelay: `${index * 150}ms` }}
+                    >
                         <div className="flex items-center gap-1">
                              {Array(5).fill(0).map((_, index)=> (<img key={index}  src={index < testimonial.rating ? assets.star_icon : assets.star_dull_icon} className='w-4 h-4' alt="star"/>))}
                         </div>
