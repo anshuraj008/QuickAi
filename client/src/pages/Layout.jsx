@@ -20,9 +20,9 @@ const Layout = () => {
           : <Menu onClick={()=> setSidebar(true)} className='w-6 h-6 text-gray-60 sm:hidden'/>
          }
        </nav>
-       <div className='flex-1 w-full flex h-[calc(100vh-64px)]'>
+       <div className='flex-1 w-full flex h-[calc(100vh-64px)] overflow-hidden'>
        <Sidebar sidebar={sidebar} setSidebar={setSidebar}/>
-            <div className='flex-1 bg-[#F4F7F8]'>
+            <div className='flex-1 bg-[#F4F7F8] overflow-y-auto'>
               <Outlet/>
             </div>
        </div>

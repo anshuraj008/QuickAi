@@ -74,8 +74,8 @@ const CreationItem = ({item}) => {
               </div>
             ) : (
               <div className='prose prose-slate max-w-none'>
-                <div className='p-4 bg-slate-50 rounded-lg border border-slate-200'>
-                  <Markdown className='text-sm text-slate-700 leading-relaxed'>
+                <div className='p-4 bg-slate-50 rounded-lg border border-slate-200 text-sm text-slate-700 leading-relaxed'>
+                  <Markdown>
                     {item.content}
                   </Markdown>
                 </div>

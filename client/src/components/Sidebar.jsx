@@ -20,12 +20,12 @@ const Sidebar = ({ sidebar, setSidebar }) => {
   const { signOut, openUserProfile } = useClerk()
 
   return (
-    <div className={`w-60 bg-white border-r border-gray-200 flex flex-col justify-between items-center
+    <div className={`w-60 bg-white border-r border-gray-200 flex flex-col
       max-sm:absolute top-14 bottom-0
       ${sidebar ? 'translate-x-0' : 'max-sm:-translate-x-full'}
-      transition-all duration-300 ease-in-out`}>
+      transition-all duration-300 ease-in-out overflow-hidden`}>
 
-      <div className="my-7 w-full">
+      <div className="my-7 w-full flex-1 overflow-y-auto">
         <img src={user?.imageUrl} alt="User avatar" className="w-14 rounded-full mx-auto" />
         <h1 className="mt-1 text-center">{user?.fullName}</h1>
 
@@ -52,7 +52,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
         </div>
       </div>
 
-      <div className="w-full border-t border-gray-200 p-4 px-7 flex items-center justify-between">
+      <div className="w-full border-t border-gray-200 p-4 px-7 flex items-center justify-between flex-shrink-0">
         <div onClick={openUserProfile} className="flex gap-2 items-center cursor-pointer">
           <img src={user.imageUrl} className='w-8 rounded-full' alt="" />
              <div>
