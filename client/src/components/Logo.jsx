@@ -1,25 +1,23 @@
 import React from 'react'
 
-const Logo = ({ className = "w-32 sm:w-44" }) => {
+const Logo = ({ className = '' }) => {
   return (
     <svg 
-      viewBox="0 0 200 50" 
+      viewBox="0 0 180 45" 
       className={className}
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* Background glow effect */}
       <defs>
-        <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+        {/* Premium gradient */}
+        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" style={{ stopColor: '#ec4899', stopOpacity: 1 }} />
+          <stop offset="50%" style={{ stopColor: '#a855f7', stopOpacity: 1 }} />
           <stop offset="100%" style={{ stopColor: '#8b5cf6', stopOpacity: 1 }} />
         </linearGradient>
-        <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" style={{ stopColor: '#db2777', stopOpacity: 1 }} />
-          <stop offset="50%" style={{ stopColor: '#9333ea', stopOpacity: 1 }} />
-          <stop offset="100%" style={{ stopColor: '#7c3aed', stopOpacity: 1 }} />
-        </linearGradient>
-        <filter id="glow">
-          <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+        
+        {/* Subtle glow */}
+        <filter id="softGlow">
+          <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
           <feMerge>
             <feMergeNode in="coloredBlur"/>
             <feMergeNode in="SourceGraphic"/>
@@ -27,76 +25,68 @@ const Logo = ({ className = "w-32 sm:w-44" }) => {
         </filter>
       </defs>
       
-      {/* AI Icon/Symbol */}
+      {/* Elegant geometric icon */}
       <g transform="translate(5, 8)">
-        {/* Brain/Neural network symbol */}
-        <circle cx="17" cy="17" r="15" fill="url(#gradient1)" opacity="0.2"/>
-        <circle cx="17" cy="17" r="12" fill="none" stroke="url(#gradient1)" strokeWidth="2" filter="url(#glow)"/>
-        
-        {/* Neural connections */}
-        <g stroke="url(#gradient2)" strokeWidth="1.5" fill="none">
-          <circle cx="17" cy="10" r="2" fill="url(#gradient1)"/>
-          <circle cx="17" cy="24" r="2" fill="url(#gradient1)"/>
-          <circle cx="10" cy="17" r="2" fill="url(#gradient1)"/>
-          <circle cx="24" cy="17" r="2" fill="url(#gradient1)"/>
-          <circle cx="17" cy="17" r="2.5" fill="url(#gradient1)"/>
-          
-          <line x1="17" y1="10" x2="17" y2="14.5"/>
-          <line x1="17" y1="19.5" x2="17" y2="24"/>
-          <line x1="10" y1="17" x2="14.5" y2="17"/>
-          <line x1="19.5" y1="17" x2="24" y2="17"/>
-        </g>
-        
-        {/* Lightning bolt for "Quick" */}
+        {/* Outer hexagon frame */}
         <path 
-          d="M 20 8 L 16 17 L 19 17 L 15 26" 
-          stroke="url(#gradient2)" 
-          strokeWidth="2" 
+          d="M 15 3 L 25 3 L 30 13 L 25 23 L 15 23 L 10 13 Z" 
+          fill="none"
+          stroke="url(#logoGradient)" 
+          strokeWidth="2"
+          opacity="0.9"
+        />
+        
+        {/* Inner lightning/speed marks */}
+        <path 
+          d="M 20 8 L 18 13 L 21 13 L 19 18" 
+          stroke="url(#logoGradient)" 
+          strokeWidth="2.5" 
           fill="none" 
           strokeLinecap="round"
           strokeLinejoin="round"
-          opacity="0.8"
         />
+        
+        {/* Accent dots */}
+        <circle cx="15" cy="13" r="1.5" fill="url(#logoGradient)" opacity="0.7"/>
+        <circle cx="25" cy="13" r="1.5" fill="url(#logoGradient)" opacity="0.7"/>
       </g>
       
-      {/* Text "Quick AI" */}
+      {/* Text - Classic & Clean */}
       <text 
-        x="45" 
+        x="48" 
         y="28" 
-        fontFamily="'Outfit', sans-serif" 
-        fontSize="20" 
-        fontWeight="700" 
-        fill="url(#gradient2)"
-        letterSpacing="0.5"
+        fontFamily="'Inter', 'SF Pro Display', system-ui, -apple-system, sans-serif" 
+        fontSize="24" 
+        fontWeight="700"
+        letterSpacing="-0.5"
+        fill="url(#logoGradient)"
+        filter="url(#softGlow)"
       >
         Quick
       </text>
       
       <text 
-        x="110" 
+        x="116" 
         y="28" 
-        fontFamily="'Outfit', sans-serif" 
-        fontSize="20" 
-        fontWeight="800" 
-        fill="url(#gradient2)"
-        letterSpacing="1"
+        fontFamily="'Inter', 'SF Pro Display', system-ui, -apple-system, sans-serif" 
+        fontSize="24" 
+        fontWeight="300"
+        fill="url(#logoGradient)"
+        filter="url(#softGlow)"
       >
         AI
       </text>
       
-      {/* Subtitle/Tagline */}
-      <text 
-        x="45" 
-        y="38" 
-        fontFamily="'Outfit', sans-serif" 
-        fontSize="7" 
-        fontWeight="500" 
-        fill="url(#gradient1)"
-        opacity="0.7"
-        letterSpacing="1.5"
-      >
-        POWERED BY INTELLIGENCE
-      </text>
+      {/* Minimal underline accent */}
+      <rect 
+        x="48" 
+        y="32" 
+        width="90" 
+        height="1.5" 
+        fill="url(#logoGradient)"
+        opacity="0.3"
+        rx="0.75"
+      />
     </svg>
   )
 }
