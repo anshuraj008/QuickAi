@@ -21,7 +21,7 @@ const App = () => {
   // }, [])
 
   return (
-    <div>
+    <div className='min-h-screen bg-white dark:bg-slate-900 transition-colors duration-300'>
     <Toaster />
       <Routes>
         <Route path='/' element={<Home/>}/>
