@@ -1,9 +1,9 @@
 import React, { useState} from 'react'
 import { Outlet , useNavigate} from 'react-router-dom'
-import { assets } from '../assets/assets'
 import { Menu, X } from 'lucide-react'
 import Sidebar from '../components/Sidebar'
 import {SignIn, useUser} from '@clerk/clerk-react'
+import Logo from '../components/Logo'
 
 const Layout = () => {
   const navigate = useNavigate()
@@ -14,7 +14,9 @@ const Layout = () => {
     <div className='flex flex-col items-start justify-start h-screen dark:bg-slate-900 transition-colors duration-300'>
        
        <nav className='w-full px-8 min-h-14 flex items-center justify-between border-b border-gray-200 dark:border-indigo-800 dark:bg-slate-900 transition-colors duration-300'>
-         <img className='cursor-pointer w-32 sm:w-44' src={assets.logo} alt="" onClick={()=>navigate('/')}/>
+         <div className='cursor-pointer' onClick={()=>navigate('/')}>
+           <Logo className='w-32 sm:w-44'/>
+         </div>
          {
           sidebar ? <X onClick={()=> setSidebar(false)} className='w-6 h-6 text-gray-60 dark:text-gray-300 sm:hidden'/>
           : <Menu onClick={()=> setSidebar(true)} className='w-6 h-6 text-gray-60 dark:text-gray-300 sm:hidden'/>
