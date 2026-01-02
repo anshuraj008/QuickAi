@@ -176,7 +176,7 @@ export const removeImageObject = async (req, res) => {
     try {
         const { userId } = req.auth();
         const { object } = req.body;
-        const { image } = req.file;
+        const image = req.file;
         const plan = req.plan;
 
         if(plan !== 'premium'){
@@ -216,9 +216,15 @@ export const resumeReview = async (req, res) => {
             return res.json({ success: false, message: "File size exceeds the 5MB limit."});
         }
 
-        const pdf = (await import('pdf-parse')).default;
+        const pdfParse = await import('pdf-parse');
+        const pdf = pdfParse.default || pdfParse;
         const dataBuffer = fs.readFileSync(resume.path)
         const pdfData = await pdf(dataBuffer)
+        
+        // Clean up uploaded file
+        if (fs.existsSync(resume.path)) {
+            fs.unlinkSync(resume.path);
+        }
 
         const prompt = `Review my resume and suggest improvements. Here is the content of my resume:\n\n${pdfData.text}`
 

@@ -15,7 +15,7 @@ const RemoveBackground = () => {
    const {getToken} = useAuth()
 
       const onSubmitHandler = async (e) => {
-    e.preventDefault()
+      e.preventDefault()
     try {
       setLoading(true)
       const formData = new FormData();
