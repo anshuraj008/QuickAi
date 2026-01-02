@@ -5,8 +5,14 @@ import {clerkMiddleware, requireAuth} from '@clerk/express';
 import airouter from './routes/aiRoutes.js';
 import connectCloudinary from './configs/cloudinary.js';
 import userRouter from './routes/userRoutes.js';
+import fs from 'fs';
 
 const app = express();
+
+// Create uploads directory if it doesn't exist
+if (!fs.existsSync('uploads')) {
+    fs.mkdirSync('uploads');
+}
 
 await connectCloudinary();
 

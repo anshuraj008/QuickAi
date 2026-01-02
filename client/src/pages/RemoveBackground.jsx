@@ -3,6 +3,7 @@ import React from 'react'
 import { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '@clerk/clerk-react';
+import toast from 'react-hot-toast';
 
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 
@@ -20,7 +21,7 @@ const RemoveBackground = () => {
       const formData = new FormData();
       formData.append('image', input);
 
-      const {data} = await axios.post('/api/ai/remove-background', formData, {
+      const {data} = await axios.post('/api/ai/remove-image-background', formData, {
         headers: {Authorization: `Bearer ${await getToken()}`}
       })
 
@@ -77,7 +78,7 @@ const RemoveBackground = () => {
             <img src={content} alt="image" className='mt-3 w-full h-full'/>
           )
       }
-      
+
     </div>
     </div>
   )

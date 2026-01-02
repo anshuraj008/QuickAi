@@ -153,8 +153,13 @@ export const removeImageBackground = async (req, res) => {
         }
 
         const {secure_url} = await cloudinary.uploader.upload(image.path, {
-            transformation: [{ effect: 'remove_background', background_removal: 'remove_the_background'}]
+            transformation: [{ effect: 'background_removal' }]
         })
+
+        // Clean up uploaded file
+        if (fs.existsSync(image.path)) {
+            fs.unlinkSync(image.path);
+        }
 
         await sql`INSERT INTO creations (user_id, type, prompt, content) VALUES (${userId}, 'image', 'Remove background from image', ${secure_url})`;
         
