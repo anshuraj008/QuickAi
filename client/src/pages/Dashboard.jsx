@@ -1,19 +1,39 @@
 import React, { useEffect, useState } from 'react'
 import { dummyCreationData } from '../assets/assets'
 import { Gem, Sparkles, TrendingUp, Zap, Calendar, Image, FileText } from 'lucide-react'
-import { Protect } from '@clerk/clerk-react'
+import { Protect, useAuth } from '@clerk/clerk-react'
 import CreationItem from '../components/CreationItem'
+import axios from 'axios'
+
+axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 
 const Dashboard = () => {
 
 
-     const [creations, setCreations] = useState([])
+    const [creations, setCreations] = useState([])
+    const [loading, setLoading] = useState(true)
+  
+      const {getToken} = useAuth()
 
-     const getDashboard = async () => {
-         setCreations(dummyCreationData)
-     }
+     const getDashboardData = async () => {
+
+        try{
+      const {data} = await axios.get('/api/user/get-user-creations', {
+        headers: {Authorization: `Bearer ${await getToken()}`}
+      })
+      if(data.success) {
+        setCreations(data.creations)
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+       toast.error(error.message)
+       } 
+    setLoading(false)
+    }
+
      useEffect(()=>{
-        getDashboard()
+        getDashboardData()
      }, [])
 
      // Calculate statistics
@@ -113,12 +133,21 @@ const Dashboard = () => {
       </div>
 
       {/* Recent Creations Section */}
+      
       <div className='bg-white rounded-2xl shadow-lg p-6 border border-slate-200'>
         <div className='flex items-center justify-between mb-6'>
-          <div>
+        {
+        loading ? (
+          <div className='flex justify-center items-center h-3/4'>
+            <span className='w-11 h-11 my-1 rounded-full border-3 border-purple-500 border-t-transparent animate-spin'></span>
+          </div>
+        ) : (
+           <div>
             <h3 className='text-2xl font-bold text-slate-800'>Recent Creations</h3>
             <p className='text-sm text-slate-500 mt-1'>Your latest AI-generated content</p>
           </div>
+        )
+        }
           <div className='flex items-center gap-2 text-sm text-slate-600 bg-slate-100 px-4 py-2 rounded-lg'>
             <Sparkles className='w-4 h-4 text-blue-500'/>
             {creations.length} Total
