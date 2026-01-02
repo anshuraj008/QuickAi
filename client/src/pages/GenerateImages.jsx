@@ -1,4 +1,4 @@
-import { Image, Sparkles, Hash } from 'lucide-react'
+import { Image, Sparkles, Hash, Download } from 'lucide-react'
 import { useState } from 'react'
 import React from 'react'
 import axios from 'axios'
@@ -48,6 +48,24 @@ const GenerateImages = () => {
         toast.error(error.message)
       }
     setLoading(false)
+  }
+
+  const downloadImage = async () => {
+    try {
+      const response = await fetch(content);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `generated-image-${Date.now()}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      toast.success('Image downloaded successfully!');
+    } catch (error) {
+      toast.error('Failed to download image');
+    }
   }
 
   return (
@@ -119,9 +137,20 @@ const GenerateImages = () => {
 
       {/* RIGHT COLUMN */}
       <div className='w-full max-w-lg p-4 bg-white rounded-lg flex flex-col border border-gray-200 min-h-96'>
-        <div className='flex items-center gap-3'>
-          <Image className='w-5 h-5 text-[#00AD25]' />
-          <h1 className='text-xl font-semibold'>Generated Image</h1>
+        <div className='flex items-center justify-between'>
+          <div className='flex items-center gap-3'>
+            <Image className='w-5 h-5 text-[#00AD25]' />
+            <h1 className='text-xl font-semibold'>Generated Image</h1>
+          </div>
+          {content && (
+            <button
+              onClick={downloadImage}
+              className='flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-sm rounded-lg transition-colors'
+            >
+              <Download className='w-4 h-4' />
+              Download
+            </button>
+          )}
         </div>
 
         { !content ? (

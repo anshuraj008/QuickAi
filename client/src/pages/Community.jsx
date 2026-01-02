@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useAuth, useUser } from '@clerk/clerk-react'
-import { Heart } from 'lucide-react'
+import { Heart, Download } from 'lucide-react'
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -45,6 +45,24 @@ const Community = () => {
     }
   }
 
+  const downloadImage = async (imageUrl, prompt) => {
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `community-${prompt.slice(0, 20).replace(/\s+/g, '-')}-${Date.now()}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      toast.success('Image downloaded successfully!');
+    } catch (error) {
+      toast.error('Failed to download image');
+    }
+  }
+
   useEffect(() => {
     if(user) {
       fetchCreations()
@@ -61,9 +79,15 @@ const Community = () => {
 
           <div className='absolute bottom-0 top-0 right-0 left-3 flex gap-2 items-end justify-end group-hover:justify-between p-3 group-hover:bg-gradient-to-b from-transparent to-black/80 text-white rounded-lg'> 
             <p className='text-sm hidden group-hover:block'>{creation.prompt}</p>
-            <div className='flex gap-1 items-center'>
-              <p>{creation.likes.length}</p>
-              <Heart onClick={() => imageLikeToggle(creation.id)} className={`min-w-5 h-5 hover:scale-110 cursor-pointer ${creation.likes.includes(user.id) ? 'fill-red-500 text-red-600' : 'text-gray-500'}`}/>
+            <div className='flex gap-2 items-center'>
+              <Download 
+                onClick={() => downloadImage(creation.content, creation.prompt)} 
+                className='min-w-5 h-5 hover:scale-110 cursor-pointer text-white hidden group-hover:block'
+              />
+              <div className='flex gap-1 items-center'>
+                <p>{creation.likes.length}</p>
+                <Heart onClick={() => imageLikeToggle(creation.id)} className={`min-w-5 h-5 hover:scale-110 cursor-pointer ${creation.likes.includes(user.id) ? 'fill-red-500 text-red-600' : 'text-gray-500'}`}/>
+              </div>
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Sparkles, Scissors } from 'lucide-react'
+import { Sparkles, Scissors, Download } from 'lucide-react'
 import axios from 'axios';
 import { useAuth } from '@clerk/clerk-react';
 import toast from 'react-hot-toast';
@@ -42,6 +42,24 @@ const RemoveObject = () => {
     setLoading(false)
   }
 
+  const downloadImage = async () => {
+    try {
+      const response = await fetch(content);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `object-removed-${Date.now()}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      toast.success('Image downloaded successfully!');
+    } catch (error) {
+      toast.error('Failed to download image');
+    }
+  }
+
 
   return (
     <div className='h-full overflow-y-scroll p-6 flex items-start flex-wrap gap-4 text-slate-700'>
@@ -75,10 +93,21 @@ const RemoveObject = () => {
 
       {/* right col */}
       <div className='w-full max-w-lg p-4 bg-white rounded-lg flex flex-col border border-grey-200 min-h-96'>
-         <div className='flex items-center gap-3'>
+         <div className='flex items-center justify-between'>
+           <div className='flex items-center gap-3'>
              <Scissors className='w-5 h-5 text-[#4A7AFF]'/>
              <h1 className='text-xl font-semibold'>Processed Image</h1>
-      </div>
+           </div>
+           {content && (
+             <button
+               onClick={downloadImage}
+               className='flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm rounded-lg transition-colors'
+             >
+               <Download className='w-4 h-4' />
+               Download
+             </button>
+           )}
+         </div>
 
       {
         !content ? (
