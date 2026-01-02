@@ -29,7 +29,7 @@ const Testimonial = () => {
         <div className='px-4 sm:px-20 xl:px-32 py-24'>
             <div className='text-center'>
                 <h2 className='text-slate-700 dark:text-white text-[42px] font-semibold transition-colors'>
-                    <span className='bg-gradient-to-r  dark:from-pink-500 dark:to-purple-500 text-transparent bg-clip-text'>Loved by Creators</span>
+                    <span className='bg-gradient-to-r from-pink-600 to-purple-600 text-transparent bg-clip-text'>Loved by Creators</span>
                 </h2>
                 <p className='text-gray-500 dark:text-gray-400 max-w-lg mx-auto transition-colors'>Don't just take our word for it. Here's what our users are saying.</p>
             </div>

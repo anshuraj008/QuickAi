@@ -18,7 +18,7 @@ const Navbar = () => {
         {/* Theme Toggle Button */}
         <button
           onClick={toggleTheme}
-          className='relative w-14 h-7 bg-gradient-to-r  dark:from-pink-500 dark:to-purple-500 rounded-full p-1 transition-all duration-300 hover:shadow-lg hover:shadow-pink-300/50'
+          className='relative w-14 h-7 bg-gradient-to-r from-pink-600 to-purple-600 rounded-full p-1 transition-all duration-300 hover:shadow-lg hover:shadow-purple-300/50'
           aria-label='Toggle theme'
         >
           <div className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-transform duration-300 flex items-center justify-center ${isDark ? 'translate-x-7' : 'translate-x-0'}`}>
@@ -27,7 +27,7 @@ const Navbar = () => {
         </button>
         {
           user ? <UserButton/> : (
-                <button onClick={openSignIn} className='flex items-center gap-2 rounded-full text-sm cursor-pointer bg-gradient-to-r  dark:from-pink-500 dark:to-purple-500 text-white px-10 py-2.5 hover:shadow-lg hover:shadow-pink-300/50 hover:scale-105 transition-all duration-300 font-semibold'>Get Started <ArrowRight className='w-4 h-4'/> </button>
+                <button onClick={openSignIn} className='flex items-center gap-2 rounded-full text-sm cursor-pointer bg-gradient-to-r from-pink-600 to-purple-600 text-white px-10 py-2.5 hover:shadow-lg hover:shadow-purple-300/50 hover:scale-105 transition-all duration-300 font-semibold'>Get Started <ArrowRight className='w-4 h-4'/> </button>
           )
         }
       </div>

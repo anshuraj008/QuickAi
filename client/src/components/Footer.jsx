@@ -27,7 +27,7 @@ const Footer = () => {
                     <p>The latest news, articles, and resources, sent to your inbox weekly.</p>
                     <div className="flex items-center gap-2 pt-4">
                         <input className="border border-gray-500/30 dark:border-gray-700 dark:bg-indigo-900/30 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 ring-purple-500 dark:ring-purple-400 outline-none w-full max-w-64 h-9 rounded px-2 transition-colors" type="email" placeholder="Enter your email"/>
-                        <button className="bg-gradient-to-r  dark:from-pink-500 dark:to-purple-500 w-24 h-9 text-white rounded cursor-pointer hover:shadow-lg hover:shadow-pink-300/50 font-semibold transition-all">Subscribe</button>
+                        <button className="bg-gradient-to-r from-pink-600 to-purple-600 w-24 h-9 text-white rounded cursor-pointer hover:shadow-lg hover:shadow-purple-300/50 font-semibold transition-all">Subscribe</button>
                     </div>
                 </div>
             </div>

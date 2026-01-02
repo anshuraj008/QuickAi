@@ -38,7 +38,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
               onClick={() => setSidebar(false)}
               className={({ isActive }) =>
                 `px-3.5 py-2.5 flex items-center gap-3 rounded transition-all duration-300
-                ${isActive ? 'bg-gradient-to-r  dark:from-pink-500 dark:to-purple-500 text-white shadow-lg' : 'hover:bg-gray-100 dark:hover:bg-indigo-900/50'}`
+                ${isActive ? 'bg-gradient-to-r from-pink-600 to-purple-600 text-white shadow-lg' : 'hover:bg-gray-100 dark:hover:bg-indigo-900/50'}`
               }
             >
               {({ isActive }) => (
