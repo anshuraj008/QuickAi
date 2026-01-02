@@ -11,18 +11,18 @@ const Layout = () => {
   const { user } = useUser()
 
   return user ? (
-    <div className='flex flex-col items-start justify-start h-screen'>
+    <div className='flex flex-col items-start justify-start h-screen dark:bg-slate-900 transition-colors duration-300'>
        
-       <nav className='w-full px-8 min-h-14 flex items-center justify-between border-b border-gray-200'>
+       <nav className='w-full px-8 min-h-14 flex items-center justify-between border-b border-gray-200 dark:border-indigo-800 dark:bg-slate-900 transition-colors duration-300'>
          <img className='cursor-pointer w-32 sm:w-44' src={assets.logo} alt="" onClick={()=>navigate('/')}/>
          {
-          sidebar ? <X onClick={()=> setSidebar(false)} className='w-6 h-6 text-gray-60 sm:hidden'/>
-          : <Menu onClick={()=> setSidebar(true)} className='w-6 h-6 text-gray-60 sm:hidden'/>
+          sidebar ? <X onClick={()=> setSidebar(false)} className='w-6 h-6 text-gray-60 dark:text-gray-300 sm:hidden'/>
+          : <Menu onClick={()=> setSidebar(true)} className='w-6 h-6 text-gray-60 dark:text-gray-300 sm:hidden'/>
          }
        </nav>
        <div className='flex-1 w-full flex h-[calc(100vh-64px)] overflow-hidden'>
        <Sidebar sidebar={sidebar} setSidebar={setSidebar}/>
-            <div className='flex-1 bg-[#F4F7F8] overflow-y-auto'>
+            <div className='flex-1 bg-[#F4F7F8] dark:bg-gradient-to-br dark:from-slate-900 dark:via-indigo-950 dark:to-slate-900 overflow-y-auto transition-colors duration-300'>
               <Outlet/>
             </div>
        </div>

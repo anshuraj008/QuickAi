@@ -3,8 +3,8 @@ import { assets } from '../assets/assets'
 
 const Footer = () => {
   return (
-    <footer className="px-6 md:px-16 lg:px-24 xl:px-32 pt-8 w-full text-gray-500 mt-20">
-    <div className="flex flex-col md:flex-row justify-between w-full gap-10 border-b border-gray-500/30 pb-6">
+    <footer className="px-6 md:px-16 lg:px-24 xl:px-32 pt-8 w-full text-gray-500 dark:text-gray-400 mt-20 transition-colors duration-300">
+    <div className="flex flex-col md:flex-row justify-between w-full gap-10 border-b border-gray-500/30 dark:border-gray-700 pb-6">
         <div className="md:max-w-96">
            <img className="h-9" src={assets.logo} alt="Logo"/>
             <p className="mt-6 text-sm">
@@ -13,21 +13,21 @@ const Footer = () => {
         </div>
         <div className="flex-1 flex items-start md:justify-end gap-20">
             <div>
-                <h2 className="font-semibold mb-5 text-gray-800">Company</h2>
+                <h2 className="font-semibold mb-5 text-gray-800 dark:text-white">Company</h2>
                 <ul className="text-sm space-y-2">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About us</a></li>
-                    <li><a href="#">Contact us</a></li>
-                    <li><a href="#">Privacy policy</a></li>
+                    <li><a href="#" className="hover:text-purple-500 transition-colors">Home</a></li>
+                    <li><a href="#" className="hover:text-purple-500 transition-colors">About us</a></li>
+                    <li><a href="#" className="hover:text-purple-500 transition-colors">Contact us</a></li>
+                    <li><a href="#" className="hover:text-purple-500 transition-colors">Privacy policy</a></li>
                 </ul>
             </div>
             <div>
-                <h2 className="font-semibold text-gray-800 mb-5">Subscribe to our newsletter</h2>
+                <h2 className="font-semibold text-gray-800 dark:text-white mb-5">Subscribe to our newsletter</h2>
                 <div className="text-sm space-y-2">
                     <p>The latest news, articles, and resources, sent to your inbox weekly.</p>
                     <div className="flex items-center gap-2 pt-4">
-                        <input className="border border-gray-500/30 placeholder-gray-500 focus:ring-2 ring-indigo-600 outline-none w-full max-w-64 h-9 rounded px-2" type="email" placeholder="Enter your email"/>
-                        <button className="bg-primary w-24 h-9 text-white rounded cursor-pointer">Subscribe</button>
+                        <input className="border border-gray-500/30 dark:border-gray-700 dark:bg-indigo-900/30 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 ring-purple-500 dark:ring-purple-400 outline-none w-full max-w-64 h-9 rounded px-2 transition-colors" type="email" placeholder="Enter your email"/>
+                        <button className="bg-gradient-to-r  dark:from-pink-500 dark:to-purple-500 w-24 h-9 text-white rounded cursor-pointer hover:shadow-lg hover:shadow-pink-300/50 font-semibold transition-all">Subscribe</button>
                     </div>
                 </div>
             </div>

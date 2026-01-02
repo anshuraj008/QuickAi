@@ -9,6 +9,17 @@
      --color-primary: #5044E5;
 }
 
+/* Enable dark mode */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    color-scheme: dark;
+  }
+}
+
+.dark {
+  color-scheme: dark;
+}
+
 .reset-tw, .reset-tw *{
   all: revert !important;
 }
