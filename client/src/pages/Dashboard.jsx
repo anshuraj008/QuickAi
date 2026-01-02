@@ -42,7 +42,7 @@ const Dashboard = () => {
      const blogCount = creations.filter(c => c.type === 'blog-title').length
 
   return (
-    <div className='min-h-full bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 p-8'>
+    <div className='min-h-full bg-gradient-to-r from-slate-50 via-blue-50 to-purple-50 p-8'>
       
       {/* Header Section */}
       <div className='mb-8'>
