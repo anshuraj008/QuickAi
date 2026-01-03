@@ -6,12 +6,15 @@ import airouter from './routes/aiRoutes.js';
 import connectCloudinary from './configs/cloudinary.js';
 import userRouter from './routes/userRoutes.js';
 import fs from 'fs';
+import path from 'path';
 
 const app = express();
 
-// Create uploads directory if it doesn't exist
-if (!fs.existsSync('uploads')) {
-    fs.mkdirSync('uploads');
+// Create uploads directory if it doesn't exist (only in non-serverless environment)
+if (process.env.VERCEL !== '1') {
+    if (!fs.existsSync('uploads')) {
+        fs.mkdirSync('uploads');
+    }
 }
 
 await connectCloudinary();
@@ -27,8 +30,13 @@ app.use(requireAuth());
 app.use('/api/ai', airouter);
 app.use('/api/user', userRouter);
 
-const PORT = process.env.PORT || 3000;
+// Only start server if not in Vercel environment
+if (process.env.VERCEL !== '1') {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log('Server is running on port', PORT);
+    });
+}
 
-app.listen(PORT, () => {
-    console.log('Server is running on port', PORT);
-});
+// Export for Vercel
+export default app;
