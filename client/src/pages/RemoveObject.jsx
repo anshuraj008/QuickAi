@@ -11,6 +11,7 @@ const RemoveObject = () => {
      const [object, setObject] = useState('')
      const [loading, setLoading] = useState(false)
      const [content, setContent] = useState('')
+     const [previewUrl, setPreviewUrl] = useState('')
 
       const {getToken} = useAuth()
 
@@ -18,10 +19,6 @@ const RemoveObject = () => {
         e.preventDefault();
             try {
       setLoading(true)
-
-      if(object.split(' ').length > 1){
-        return toast('Please provide a single object name to remove')
-      }
 
       const formData = new FormData();
       formData.append('image', input);
@@ -72,8 +69,25 @@ const RemoveObject = () => {
 
           <p className='mt-6 text-sm font-medium'>Upload an image</p>
 
-          <input onChange={(e) => setInput(e.target.files[0])}  type="file" accept='image/*' className='w-full p-2 px-3 mt-2 outline-none text-sm rounded-md border-gray-300 text-gray-600' required/>
+          <input onChange={(e) => {
+            const file = e.target.files[0];
+            setInput(file);
+            if(file) {
+              const url = URL.createObjectURL(file);
+              setPreviewUrl(url);
+            }
+          }}  type="file" accept='image/*' className='w-full p-2 px-3 mt-2 outline-none text-sm rounded-md border-gray-300 text-gray-600' required/>
           
+          {/* Image Preview */}
+          {previewUrl && (
+            <div className='mt-4'>
+              <p className='text-sm font-medium mb-2'>Preview:</p>
+              <div className='border border-gray-300 rounded-lg overflow-hidden'>
+                <img src={previewUrl} alt="Preview" className='w-full h-auto max-h-64 object-contain'/>
+              </div>
+            </div>
+          )}
+
           <p className='mt-6 text-sm font-medium'>Describe object name to remove</p>
           
           <textarea
@@ -110,7 +124,14 @@ const RemoveObject = () => {
          </div>
 
       {
-        !content ? (
+        loading ? (
+          <div className='flex-1 flex justify-center items-center'>
+            <div className='text-sm flex flex-col items-center gap-5 text-gray-500'>
+              <div className='w-12 h-12 rounded-full border-4 border-gray-200 border-t-blue-500 animate-spin'></div>
+              <p>Removing object, please wait...</p>
+            </div>
+          </div>
+        ) : !content ? (
       <div className='flex-1 flex justify-center items-center'>
           <div className='text-sm flex flex-col items-center gap-5 text-gray-400'>
                <Scissors className='w-9 h-9'/>

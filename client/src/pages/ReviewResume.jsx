@@ -11,6 +11,7 @@ const ReviewResume = () => {
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [content, setContent] = useState('')
+  const [previewUrl, setPreviewUrl] = useState('')
   
     const {getToken} = useAuth()
 
@@ -49,9 +50,43 @@ const ReviewResume = () => {
 
              <p className='mt-6 text-sm font-medium'>Upload Resume</p>
 
-             <input onChange={(e) => setInput(e.target.files[0])}  type="file" accept='application/pdf' className='w-full p-2 px-3 mt-2 outline-none text-sm rounded-md border-gray-300 text-gray-600' required/>
+             <input onChange={(e) => {
+               const file = e.target.files[0];
+               setInput(file);
+               if(file) {
+                 const url = URL.createObjectURL(file);
+                 setPreviewUrl(url);
+               }
+             }}  type="file" accept='application/pdf' className='w-full p-2 px-3 mt-2 outline-none text-sm rounded-md border-gray-300 text-gray-600' required/>
           
             <p className='text-xs text-gray-500 font-light mt-1'>Supported formats: PDF Resume only.</p>
+
+            {/* PDF Preview */}
+            {previewUrl && (
+              <div className='mt-4'>
+                <div className='flex items-center justify-between mb-2'>
+                  <p className='text-sm font-medium'>Preview:</p>
+                  <a 
+                    href={previewUrl} 
+                    target='_blank' 
+                    rel='noopener noreferrer'
+                    className='text-xs text-blue-600 hover:text-blue-800 underline'
+                  >
+                    Open in new tab
+                  </a>
+                </div>
+                <div className='border border-gray-300 rounded-lg overflow-hidden bg-gray-50'>
+                  <iframe 
+                    src={previewUrl} 
+                    className='w-full h-96'
+                    title='Resume Preview'
+                  />
+                </div>
+                <p className='text-xs text-gray-500 mt-2'>
+                  <strong>Selected:</strong> {input?.name} ({(input?.size / 1024).toFixed(2)} KB)
+                </p>
+              </div>
+            )}
 
             <button disabled={loading} className={`w-full flex justify-center items-center gap-2 bg-gradient-to-r from-[#00DA83] to-[#009BB3] text-white px-4 py-2 mt-6 text-sm rounded-lg ${loading ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer hover:opacity-90'} transition-opacity`}>
               {loading ? <span className='w-4 h-4 my-1 rounded-full border-2 border-white border-t-transparent animate-spin'></span> : <FileText className='w-5'/>}
@@ -67,7 +102,14 @@ const ReviewResume = () => {
       </div>
 
       {
-        !content ? (
+        loading ? (
+          <div className='flex-1 flex justify-center items-center'>
+            <div className='text-sm flex flex-col items-center gap-5 text-gray-500'>
+              <div className='w-12 h-12 rounded-full border-4 border-gray-200 border-t-green-500 animate-spin'></div>
+              <p>Analyzing resume, please wait...</p>
+            </div>
+          </div>
+        ) : !content ? (
       <div className='flex-1 flex justify-center items-center'>
           <div className='text-sm flex flex-col items-center gap-5 text-gray-400'>
                <FileText className='w-9 h-9'/>

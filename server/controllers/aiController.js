@@ -183,12 +183,22 @@ export const removeImageObject = async (req, res) => {
             return res.json({ success: false, message: "This feature is available for premium users only. Please upgrade to premium plan."});
         }
 
-        const {public_id} = await cloudinary.uploader.upload(image.path)
+        const uploadResult = await cloudinary.uploader.upload(image.path)
 
-        const imageUrl = cloudinary.url(public_id, {
-            transformation: [
-                { effect: `gen_remove:${object}`}],
-            resources_type: 'image'
+        // Split objects by comma or space and trim
+        const objects = object.split(/[,;]/).map(obj => obj.trim()).filter(obj => obj);
+        
+        // If no commas, treat spaces as separate objects
+        const objectsToRemove = objects.length > 1 ? objects : object.split(' ').map(obj => obj.trim()).filter(obj => obj);
+        
+        // Create transformation array for multiple objects
+        const transformations = objectsToRemove.map(obj => ({
+            effect: `gen_remove:prompt_${obj}`
+        }));
+
+        const imageUrl = cloudinary.url(uploadResult.public_id, {
+            transformation: transformations,
+            secure: true
         })
 
         // Clean up uploaded file

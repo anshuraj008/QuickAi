@@ -153,7 +153,14 @@ const GenerateImages = () => {
           )}
         </div>
 
-        { !content ? (
+        { loading ? (
+          <div className='flex-1 flex justify-center items-center'>
+            <div className='text-sm flex flex-col items-center gap-5 text-gray-500'>
+              <div className='w-12 h-12 rounded-full border-4 border-gray-200 border-t-green-500 animate-spin'></div>
+              <p>Generating image, please wait...</p>
+            </div>
+          </div>
+        ) : !content ? (
         <div className='flex-1 flex justify-center items-center'>
           <div className='text-sm flex flex-col items-center gap-5 text-gray-400'>
             <Image className='w-9 h-9' />

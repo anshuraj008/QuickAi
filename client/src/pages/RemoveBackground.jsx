@@ -11,6 +11,7 @@ const RemoveBackground = () => {
    const [input, setInput] = useState('')
    const [loading, setLoading] = useState(false)
    const [content, setContent] = useState('')
+   const [previewUrl, setPreviewUrl] = useState('')
 
    const {getToken} = useAuth()
 
@@ -63,9 +64,26 @@ const RemoveBackground = () => {
                <h1 className='text-xl font-semibold'>Background Remover</h1>
            </div>
              <p className='mt-6 text-sm font-medium'>Upload an image</p>
-             <input onChange={(e) => setInput(e.target.files[0])}  type="file" accept='image/*' className='w-full p-2 px-3 mt-2 outline-none text-sm rounded-md border-gray-300 text-gray-600' required/>
+             <input onChange={(e) => {
+               const file = e.target.files[0];
+               setInput(file);
+               if(file) {
+                 const url = URL.createObjectURL(file);
+                 setPreviewUrl(url);
+               }
+             }}  type="file" accept='image/*' className='w-full p-2 px-3 mt-2 outline-none text-sm rounded-md border-gray-300 text-gray-600' required/>
           
             <p className='text-xs text-gray-500 font-light mt-1'>Supported formats: JPG, PNG, WEBP</p>
+
+            {/* Image Preview */}
+            {previewUrl && (
+              <div className='mt-4'>
+                <p className='text-sm font-medium mb-2'>Preview:</p>
+                <div className='border border-gray-300 rounded-lg overflow-hidden'>
+                  <img src={previewUrl} alt="Preview" className='w-full h-auto max-h-64 object-contain'/>
+                </div>
+              </div>
+            )}
 
             <button disabled={loading} className={`w-full flex justify-center items-center gap-2 bg-gradient-to-r from-[#F6AB41] to-[#FF4938] text-white px-4 py-2 mt-6 text-sm rounded-lg ${loading ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer hover:opacity-90'} transition-opacity`}>
             {
@@ -95,8 +113,14 @@ const RemoveBackground = () => {
          </div>
 
       {
-        !content ?
-         (
+        loading ? (
+          <div className='flex-1 flex justify-center items-center'>
+            <div className='text-sm flex flex-col items-center gap-5 text-gray-500'>
+              <div className='w-12 h-12 rounded-full border-4 border-gray-200 border-t-orange-500 animate-spin'></div>
+              <p>Removing background, please wait...</p>
+            </div>
+          </div>
+        ) : !content ? (
           <div className='flex-1 flex justify-center items-center'>
             <div className='text-sm flex flex-col items-center gap-5 text-gray-400'>
                <Eraser className='w-9 h-9'/>
