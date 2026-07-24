@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="md:max-w-96">
            <Logo className="h-9"/>
             <p className="mt-6 text-sm">
-                Experience the power of AI with QuickAi . <br/> Transform your content creation with our suite of premium AI tools. Write articles, generate images, and enhance your workflow. 
+                Experience the power of content generation with GenCraft. <br/> Transform your workflow with our suite of premium tools. Write articles, generate images, and enhance your productivity. 
             </p>
         </div>
         <div className="flex-1 flex items-start md:justify-end gap-20">

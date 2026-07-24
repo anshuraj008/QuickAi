@@ -39,6 +39,15 @@ const ReviewResume = () => {
     setLoading(false)
   }
 
+  // Extract ATS score if present in response
+  const getAtsScore = () => {
+    if (!content) return null;
+    const match = content.match(/ATS\s*Score[^\d]*(\d{1,3})\s*\/\s*100/i) || content.match(/(\d{1,3})\s*\/\s*100/);
+    return match ? parseInt(match[1], 10) : null;
+  };
+
+  const atsScore = getAtsScore();
+
   return (
          <div className='h-full overflow-y-scroll p-6 flex items-start flex-wrap gap-4 text-slate-700'>
       {/* left col */}
@@ -95,13 +104,13 @@ const ReviewResume = () => {
       </form>
 
       {/* right col */}
-      <div className='w-full max-w-lg p-4 bg-white rounded-lg flex flex-col border border-grey-200 min-h-96 max-h-[600px]'>
+      <div className='w-full max-w-lg p-4 bg-white rounded-lg flex flex-col border border-gray-200 min-h-96 max-h-[600px]'>
          <div className='flex items-center gap-3'>
              <FileText className='w-5 h-5 text-[#00DA83]'/>
              <h1 className='text-xl font-semibold'>Analysis Results</h1>
-      </div>
+         </div>
 
-      {
+       {
         loading ? (
           <div className='flex-1 flex justify-center items-center'>
             <div className='text-sm flex flex-col items-center gap-5 text-gray-500'>
@@ -117,10 +126,46 @@ const ReviewResume = () => {
           </div>
       </div>
       ) : (
-            <div className='mt-3 h-full overflow-y-scroll text-sm text-slate-600' >
-            <div className='reset-tw'>
-            <Markdown>{content}</Markdown>
-            </div>
+            <div className='mt-3 flex-1 overflow-y-auto text-sm text-slate-600 pr-1' >
+              {/* Top ATS Score Summary Card */}
+              {atsScore !== null && (
+                <div className='mb-4 p-4 bg-gradient-to-br from-slate-50 to-emerald-50/30 border border-slate-200/80 rounded-xl flex items-center justify-between gap-4 shadow-sm'>
+                  <div>
+                    <span className='text-xs font-bold uppercase tracking-wider text-slate-500'>Overall ATS Score</span>
+                    <div className='flex items-baseline gap-1.5 mt-0.5'>
+                      <span className={`text-3xl font-black ${
+                        atsScore >= 80 ? 'text-emerald-600' : atsScore >= 60 ? 'text-amber-600' : 'text-rose-600'
+                      }`}>
+                        {atsScore}
+                      </span>
+                      <span className='text-sm font-semibold text-slate-400'>/ 100</span>
+                    </div>
+                  </div>
+
+                  <div className='flex-1 max-w-[170px]'>
+                    <div className='flex justify-between items-center text-xs mb-1 font-bold'>
+                      <span className={atsScore >= 80 ? 'text-emerald-600' : atsScore >= 60 ? 'text-amber-600' : 'text-rose-600'}>
+                        {atsScore >= 80 ? '🎯 Excellent' : atsScore >= 60 ? '⚡ Good' : '⚠️ Needs Work'}
+                      </span>
+                      <span className='text-slate-500'>{atsScore}%</span>
+                    </div>
+                    <div className='w-full h-2.5 bg-slate-200 rounded-full overflow-hidden'>
+                      <div 
+                        className={`h-full rounded-full transition-all duration-700 ease-out ${
+                          atsScore >= 80 ? 'bg-gradient-to-r from-emerald-500 to-teal-400' : 
+                          atsScore >= 60 ? 'bg-gradient-to-r from-amber-500 to-yellow-400' : 
+                          'bg-gradient-to-r from-rose-500 to-red-400'
+                        }`}
+                        style={{ width: `${Math.min(atsScore, 100)}%` }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className='reset-tw'>
+                <Markdown>{content}</Markdown>
+              </div>
             </div>
       )
       }

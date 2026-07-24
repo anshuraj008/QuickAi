@@ -1,16 +1,66 @@
-# React + Vite
+# GenCraft Client (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+GenCraft is an AI-powered creative content platform. This directory contains the frontend application built with React, Vite, Tailwind CSS, and Clerk Authentication.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Prerequisites & Setup
 
-## React Compiler
+### 1. Installation
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+To install all required dependencies, run:
 
-## Expanding the ESLint configuration
+```bash
+npm install
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🔑 Environment Variables
+
+Create a `.env` file in the `client` directory with the following environment variables:
+
+```env
+# Clerk Authentication Publishable Key
+VITE_CLERK_PUBLISHABLE_KEY=
+
+# Backend API Base URL
+VITE_BASE_URL=
+```
+
+### Environment Variable Descriptions
+
+| Variable | Description | Example Value |
+| :--- | :--- | :--- |
+| `VITE_CLERK_PUBLISHABLE_KEY` | Clerk Publishable Key used for user authentication on the frontend. | `pk_test_...` |
+| `VITE_BASE_URL` | Base URL of the backend Express server. | `http://localhost:3000` |
+
+---
+
+## 🚀 Available Commands
+
+In the `client` directory, you can run the following commands:
+
+### Development Mode (Run Command)
+Starts the local development server with Hot Module Replacement (HMR):
+```bash
+npm run dev
+```
+
+### Production Build (Build Command)
+Bundles the application for production into the `dist` directory:
+```bash
+npm run build
+```
+
+### Preview Production Build
+Locally preview the production build output:
+```bash
+npm run preview
+```
+
+### Linting
+Runs ESLint to check code quality:
+```bash
+npm run lint
+```

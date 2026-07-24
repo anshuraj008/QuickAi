@@ -242,21 +242,27 @@ export const resumeReview = async (req, res) => {
             fs.unlinkSync(resume.path);
         }
 
-        const prompt = `You are an expert resume reviewer and career advisor. Analyze the following resume and provide comprehensive, actionable feedback.
+        const prompt = `You are an expert ATS (Applicant Tracking System) resume reviewer and career advisor. Analyze the following resume and provide comprehensive, actionable feedback.
 
-Your review should include:
+CRITICAL INSTRUCTION: You MUST start your response immediately with the calculated ATS Score in the exact header format shown below:
+
+# 🎯 Overall ATS Score: [Insert score out of 100, e.g. 85/100]
+**ATS Status**: [Excellent / Good / Needs Improvement / Poor] - [Short 1-line ATS summary]
+
+---
+
+Your review should then cover the following detailed sections:
 
 1. **Overall Impression**: Brief summary of the resume's current state
-2. **Strengths**: What the candidate does well (formatting, experience, skills)
-3. **Areas for Improvement**: Specific weaknesses and what needs work
-4. **Content Analysis**:
-   - Is the professional summary/objective compelling?
-   - Are achievements quantified with metrics?
-   - Is the experience described with action verbs and impact?
-   - Are skills relevant and properly showcased?
-5. **Formatting & Structure**: Layout, readability, and organization
-6. **ATS Compatibility**: Keywords and formatting for applicant tracking systems
-7. **Actionable Recommendations**: Specific steps to improve the resume
+2. **Key Strengths**: What the candidate does well (formatting, experience, skills, metrics)
+3. **Critical Areas for Improvement**: Specific weaknesses and missing elements
+4. **ATS & Keyword Compatibility**:
+   - ATS Parsability & Layout Check
+   - Hard & Soft Keyword Alignment
+5. **Content Quality & Metrics**:
+   - Action verbs & quantified achievements
+   - Professional summary & relevant skills
+6. **Step-by-Step Action Plan**: Specific, actionable steps to boost the ATS score to 90+
 
 Resume Content:
 ${pdfData.text}
